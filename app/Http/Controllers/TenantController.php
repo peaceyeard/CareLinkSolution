@@ -46,6 +46,8 @@ class TenantController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        // dd($validatedData)->toArray();
+
         $tenant = Tenant::create($validatedData);
 
         $tenant->domains()->create([

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\App;
 
-use App\Models\Tenant;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
 
-class TenantController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,8 @@ class TenantController extends Controller
      */
     public function index()
     {
-        $tenants = Tenant::with('domains')->get();
-        // dd($tenants->toArray());
-        return view('tenants.index', ['tenants'=>$tenants]);
+        $users = User::with('roles')->get();
+        return view('app.users.index', ['users'=>$users]);
     }
 
     /**
@@ -28,7 +28,7 @@ class TenantController extends Controller
      */
     public function create()
     {
-        return view('tenants.create');
+        return view('app.users.create');
     }
 
     /**
@@ -42,27 +42,22 @@ class TenantController extends Controller
         // Validation
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'domain_name' => 'required|string|max:255|unique:domains,domain',
+            'email' => 'required|email|max:255|unique:users,email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $tenant = Tenant::create($validatedData);
+        User::create($validatedData);
 
-        $tenant->domains()->create([
-            'domain' => $validatedData['domain_name'].'.'.config('app.domain')
-        ]);
-
-        return redirect()->route('tenants.index');
+        return redirect()->route('users.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Tenant  $tenant
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Tenant $tenant)
+    public function show(User $user)
     {
         //
     }
@@ -70,33 +65,45 @@ class TenantController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Tenant  $tenant
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tenant $tenant)
+    public function edit(User $user)
     {
-        //
+        
+        $roles = Role::get();
+        return view('app.users.edit', ['user'=>$user,'roles'=>$roles]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tenant  $tenant
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tenant $tenant)
+    public function update(Request $request, User $user)
     {
-        //
+        // Validation
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$user->id,
+            'roles' => 'required|array'
+        ]);
+
+        $user-update($validatedData);
+        $user->roles()-sync($request->input('roles'));
+
+        return redirect()->route('users.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Tenant  $tenant
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tenant $tenant)
+    public function destroy(User $user)
     {
         //
     }

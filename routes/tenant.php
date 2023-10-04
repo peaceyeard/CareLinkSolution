@@ -5,14 +5,15 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
+use App\Http\Controllers\App\UserController;
 
 /*
 |--------------------------------------------------------------------------
-| Tenant Routes
+| User Routes
 |--------------------------------------------------------------------------
 |
 | Here you can register the tenant routes for your application.
-| These routes are loaded by the TenantRouteServiceProvider.
+| These routes are loaded by the UserRouteServiceProvider.
 |
 | Feel free to customize them however you want. Good luck!
 |
@@ -28,15 +29,18 @@ Route::middleware([
     });
 
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('app.dashboard');
     })->middleware(['auth'])->name('dashboard');
     
     Route::middleware('auth')->group(function () {
         // Route::get('/profile', [ProfileController::class, 'edit']->name('profile.edit'));
         // Route::patch('/profile', [ProfileController::class, 'update']->name('profile.update'));
         // Route::delete('/profile', [ProfileController::class, 'destroy']->name('profile.destroy'));
-    
-        // Route::resource('users', TenantController::class);
+        
+        Route::group(['middleware' => ['role:owner']], function () {
+            //
+            Route::resource('users', UserController::class);
+        });
     });
     
     require __DIR__.'/tenant-auth.php';    
