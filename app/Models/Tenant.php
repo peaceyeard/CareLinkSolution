@@ -11,7 +11,9 @@ class Tenant extends BaseTenant implements TenantWithDatabase
 {
     use HasDatabase, HasDomains;
 
-    protected $guarded = [];
+    protected $guarded = [
+        'id'
+    ];
     
     protected $fillable = [
         'name',
@@ -19,7 +21,7 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         'password',
     ];
 
-    public static function getCustomValue(): array {
+    public static function getCustomColumns(): array {
         return [
             'id',
             'name',

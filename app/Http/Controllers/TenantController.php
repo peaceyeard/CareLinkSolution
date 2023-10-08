@@ -41,15 +41,16 @@ class TenantController extends Controller
         // Validation
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'domain_name' => 'required|string|max:255|unique:domains,domain',
+            'email' => 'required|email|max:255|unique:tenants,email',
+            'domain_name' => 'required|string|regex:/^([a-z0-9]+$)/|max:32|unique:domains,domain',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ],
+        [
+            'domain_name.regex' => 'Domain name allows letter and digit only.',
+            'domain_name.exists' => 'This domain name is already taken',
         ]);
 
-        // dd($validatedData)->toArray();
-
         $tenant = Tenant::create($validatedData);
-
         $tenant->domains()->create([
             'domain' => $validatedData['domain_name'].'.'.config('app.domain')
         ]);

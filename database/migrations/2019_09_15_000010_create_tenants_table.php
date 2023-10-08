@@ -20,7 +20,7 @@ class CreateTenantsTable extends Migration
             $table->string('id')->primary();
 
             $table->string('name')->nullable();
-            $table->string('email')->unique()->nullable();
+            $table->string('email')->nullable();
             $table->string('password')->nullable();
 
             $table->timestamps();

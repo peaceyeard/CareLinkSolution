@@ -1,8 +1,9 @@
-<x-guest-layout>
+<x-tenant-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
             <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
+                <h1 class="text-center">CareLinkSol<sup>n</sup></h1>
             </a>
         </x-slot>
 
@@ -56,4 +57,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-tenant-guest-layout>

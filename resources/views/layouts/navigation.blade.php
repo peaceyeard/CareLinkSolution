@@ -6,7 +6,8 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-10 w-auto fill-current text-gray-600" />
+                        {{-- <x-application-logo class="block h-10 w-auto fill-current text-gray-600" /> --}}
+                        <h1 class="text-center">CareLinkSol<sup>n</sup></h1>
                     </a>
                 </div>
 
@@ -34,6 +35,11 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link>
+                        {{-- <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('Profile') }} --}}
+                            Profile
+                        </x-dropdown-link>
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

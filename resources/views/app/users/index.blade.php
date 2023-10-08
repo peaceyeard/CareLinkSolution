@@ -1,8 +1,8 @@
 <x-tenant-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Tenants') }}
-            <x-btn-link class="ml-4 float-right" href="{{ route('users.create')}}">Add Tenant</x-btn-link>
+            {{ __('Users') }}
+            <x-btn-link class="ml-4 float-right" href="{{ route('users.create')}}">Add user</x-btn-link>
         </h2>
     </x-slot>
 
@@ -35,7 +35,7 @@
                                         @endforeach
                                     </td>
                                     <td class="px-6 py-4">
-                                        <x-btn-link href="{{ route('users.edit', $user->id)}}">Update
+                                        <x-btn-link href="{{ route('users.edit', $user->id)}}">Update</x-btn-link>
                                     </td>
                                 </tr>
                                 @endforeach

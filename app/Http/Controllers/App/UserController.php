@@ -91,8 +91,8 @@ class UserController extends Controller
             'roles' => 'required|array'
         ]);
 
-        $user-update($validatedData);
-        $user->roles()-sync($request->input('roles'));
+        $user->update($validatedData);
+        $user->roles()->sync($request->input('roles'));
 
         return redirect()->route('users.index');
     }
