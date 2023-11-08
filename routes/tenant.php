@@ -8,7 +8,8 @@ use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
 
 use App\Http\Controllers\App\{
     ProfileController,
-    UserController
+    UserController,
+    TaskController,
 };
 
 /*
@@ -37,6 +38,7 @@ Route::middleware([
     })->middleware(['auth'])->name('dashboard');
     
     Route::middleware('auth')->group(function () {
+        Route::view('/profile', 'profile')->name('profile');
         // Route::get('/profile', [ProfileController::class, 'edit']->name('profile.edit'));
         // Route::patch('/profile', [ProfileController::class, 'update']->name('profile.update'));
         // Route::delete('/profile', [ProfileController::class, 'destroy']->name('profile.destroy'));
@@ -44,6 +46,7 @@ Route::middleware([
         Route::group(['middleware' => ['role:owner']], function () {
             //
             Route::resource('users', UserController::class);
+            Route::resource('tasks', TaskController::class);
         });
     });
     

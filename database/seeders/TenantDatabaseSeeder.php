@@ -18,7 +18,5 @@ class TenantDatabaseSeeder extends Seeder
         Role::create(['name'=>'hrmanager']);
         Role::create(['name'=>'client']);
         Role::create(['name'=>'nurse']);
-
-        
     }
 }

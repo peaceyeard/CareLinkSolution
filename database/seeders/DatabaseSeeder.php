@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Mazumder Nazmul',
             'email' => 'mazumdernazmul00@gmail.com',
+            // 'tenant_id' => 'PeaceYeard',
         ]);
+
+        $this->call(TenantDatabaseSeeder::class);
     }
 }

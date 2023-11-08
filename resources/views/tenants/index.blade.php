@@ -2,7 +2,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Tenants') }}
-            <x-btn-link class="ml-4 float-right" href="{{ route('tenants.create')}}">Add Tenant</x-btn-link>
+            <x-btn-link class="ml-auto float-right" href="{{ route('tenants.create')}}">Add Tenant</x-btn-link>
         </h2>
     </x-slot>
 
@@ -31,7 +31,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         @foreach ($tenant->domains as $domain)
-                                            {{ $domain->domain }}{{ $loop->last ? '':', '}}
+                                            <a href="http://{{ $domain->domain }}{{ $loop->last ? '':', '}}:8000/" target="_blank">{{ $domain->domain }}{{ $loop->last ? '':', '}}</a>
                                         @endforeach
                                     </td>
                                     <td class="px-6 py-4">
