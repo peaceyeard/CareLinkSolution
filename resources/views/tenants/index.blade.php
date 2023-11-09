@@ -31,7 +31,7 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         @foreach ($tenant->domains as $domain)
-                                            <a href="http://{{ $domain->domain }}{{ $loop->last ? '':', '}}:8000/" target="_blank">{{ $domain->domain }}{{ $loop->last ? '':', '}}</a>
+                                            <a href="http://{{ $domain->domain }}{{ $loop->last ? '':', '}}" target="_blank">{{ $domain->domain }}{{ $loop->last ? '':', '}}</a>
                                         @endforeach
                                     </td>
                                     <td class="px-6 py-4">
